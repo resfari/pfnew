@@ -16,11 +16,15 @@
 void	ft_hex_display_minus(char *str, t_fl *fl, t_pf *pf, int len, char c)
 {
 	int i;
+	int acc;
 
 	i = 0;
+	acc = 0;
 	if (fl->flaglattice == 1)
 		fl->width = fl->width - 2;
-	while (i + len < fl->width)
+	if (fl->accuracy > len)
+		acc = fl->accuracy - len;
+	while (i + len + acc < fl->width)
 	{
 		fl->nol == 1 && fl->accuracy == -1 ? write(1, "0", 1) : write(1, " ", 1);
 		i++;
@@ -31,6 +35,12 @@ void	ft_hex_display_minus(char *str, t_fl *fl, t_pf *pf, int len, char c)
 	{
 		c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
 		pf->value = pf->value + 2;
+	}
+	while (acc > 0)
+	{
+		acc--;
+		pf->value++;
+		write(1, "0", 1);
 	}
 	while (str[i] != '\0')
 	{
@@ -57,6 +67,13 @@ void	ft_hex_display(char *str, t_fl *fl, t_pf *pf, char c)
 			c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
 			pf->value = pf->value + 2;
 			fl->width = fl->width - 2;
+		}
+		while (fl->accuracy > len)
+		{
+			fl->accuracy--;
+			pf->value++;
+			write(1, "0", 1);
+			fl->width--;
 		}
 		while (str[i] != '\0')
 		{

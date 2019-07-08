@@ -38,7 +38,7 @@ char	*ft_check_for_flags(char *str, int i)
 
 	j = i;
 	k = 0;
-	flags = "dDioOuUxXeEfFgGaAcCsSpn%";
+	flags = "dDuUioxXcspf%";
 	while (str[i] != '\0')
 	{
 		if (ft_strchr(flags, (int)str[i]))
@@ -121,19 +121,20 @@ int main()
 	unsigned int ul;
 
 	uch = 'a';
-	ul = 4294967295;
+	ul = -151;
 	longint = -2147483649;
 	s = "123456";
 	c = 'a';
 	f = 9223372036854775807999.0;
 	d = 123456789.0;
 	l = 22222.999999999999999;
-	z = 42342;
+	z = -12345;
 	si = -32765;
 	signed char a;
 	a = 'b';
 //	lli = -9223372036854775808;
-	printf("\n%d\n", ft_printf("%-20p", &s));
-	printf("\n%d\n", printf("%-20p", &s));
+	printf("\n%d\n", ft_printf("%s str = %s%s%s%s", s, s, s, s, "89"));
+	printf("\n%d\n", printf("%s str = %s%s%s%s", s, s, s, s, "89"));
+//	printf("\n%d\n", printf("%u", ul));
 	return (0);
 }

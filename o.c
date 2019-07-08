@@ -16,11 +16,15 @@
 void	ft_octo_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
 {
 	int i;
+	int acc;
 
 	i = 0;
+	acc = 0;
 	if (fl->flaglattice == 1)
 		fl->width--;
-	while (i + len < fl->width)
+	if (fl->accuracy > len)
+		acc = fl->accuracy - len;
+	while (i + len + acc < fl->width)
 	{
 		fl->nol == 1 && fl->accuracy == -1 ? write(1, "0", 1) : write(1, " ", 1);
 		i++;
@@ -31,6 +35,12 @@ void	ft_octo_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
 	{
 		write(1, "0", 1);
 		pf->value++;
+	}
+	while (acc > 0)
+	{
+		acc--;
+		pf->value++;
+		write(1, "0", 1);
 	}
 	while (str[i] != '\0')
 	{
@@ -53,6 +63,13 @@ void	ft_octo_display(char *str, t_fl *fl, t_pf *pf)
 		{
 			write(1, "0", 1);
 			pf->value++;
+			fl->width--;
+		}
+		while (fl->accuracy > len)
+		{
+			fl->accuracy--;
+			pf->value++;
+			write(1, "0", 1);
 			fl->width--;
 		}
 		while (str[i] != '\0')

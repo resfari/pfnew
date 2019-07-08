@@ -83,7 +83,6 @@ int		ft_accuracy_str(char *str, t_fl *fl)
 	{
 		i++;
 		fl->accuracy = 0;
-
 		while (ft_isdigit((int)str[i]) == 1)
 		{
 			fl->accuracy = fl->accuracy * 10 + (str[i] - 48);

@@ -99,11 +99,14 @@ int		ft_read_arg(va_list list, t_pf *pf)
 		if (pf->str[i] == '%')
 		{
 			ft_treatment(pf->procent[count], list, pf);
-			i = ft_strlen(pf->procent[count]) + i + 1;
+			i = ft_strlen(pf->procent[count]) + i;
 			count++;
 		}
-		else if (i < len)
+		else if(i < len)
+		{
 			write(1, &pf->str[i], 1);
+			pf->value++;
+		}
 		i++;
 	}
 	return (0);
