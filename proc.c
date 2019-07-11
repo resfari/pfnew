@@ -56,10 +56,8 @@ int		ft_conclusionproc(t_fl *fl, t_pf *pf)
 			}
 		}
 	}
-	if (fl->flagminus == 0)
-	{
+	else
 		ft_procenthelp(fl, pf);
-	}
 	return (1);
 }
 

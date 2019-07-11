@@ -88,7 +88,9 @@ int 	ft_concpointer(char *s, va_list list, t_pf *pf)
 	fl1 = (t_fl*)malloc(sizeof(t_fl) * 1);
 	ft_flags(s, fl1);
 	ft_width(s, fl1);
-	ft_accuracy(s, fl1);
+	ft_accuracy_str(s, fl1);
+	if (fl1->accuracy != -1 || (s[0] == '0' && ft_strlen(s) == 1))
+		return (0);
 	x = ft_pointer_ditsribution(list, fl1, pf);
 	return (0);
 }

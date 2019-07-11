@@ -29,24 +29,25 @@ int		ft_check_str(char *str)
 	return (count);
 }
 
-char	*ft_check_for_flags(char *str, int i)
+char	*ft_check_for_flags(char *str, t_pf *pf)
 {
 	const char *flags;
 	int j;
 	int k;
 	char *newstr;
 
-	j = i;
+	pf->i++;
+	j = pf->i;
 	k = 0;
 	flags = "dDuUioxXcspf%";
-	while (str[i] != '\0')
+	while (str[pf->i] != '\0')
 	{
-		if (ft_strchr(flags, (int)str[i]))
+		if (ft_strchr(flags, (int)str[pf->i]))
 		{
-			if (!(newstr = (char*)malloc(sizeof(char) * (i - j + 1))))
+			if (!(newstr = (char*)malloc(sizeof(char) * (pf->i - j + 1))))
 				return (NULL);
-			newstr[i - j + 1] = '\0';
-			while (j <= i)
+			newstr[pf->i - j + 1] = '\0';
+			while (j <= pf->i)
 			{
 				newstr[k] = str[j];
 				j++;
@@ -54,7 +55,7 @@ char	*ft_check_for_flags(char *str, int i)
 			}
 			return (newstr);
 		}
-		i++;
+		pf->i++;
 	}
 	return (NULL);
 }
@@ -77,12 +78,13 @@ int		ft_read_format(const char *format, t_pf *pf)
 	{
 		if (pf->str[pf->i] == '%')
 		{
-			pf->procent[pf->j] = ft_check_for_flags(pf->str, pf->i + 1);
+			if ((pf->procent[pf->j] = ft_check_for_flags(pf->str, pf)) == NULL)
+				return (0);
 			pf->j++;
 		}
 		pf->i++;
 	}
-	return (pf->i);
+	return (1);
 }
 
 void		ft_fill_pf(t_pf *pf)
@@ -102,7 +104,8 @@ int		ft_printf(const char *restrict format, ...)
 	pf = (t_pf*)malloc(sizeof(t_pf) * 1);
 	ft_fill_pf(pf);
 	x = ft_read_format(format, pf);
-	ft_read_arg(list, pf);
+	if (x == 1)
+		ft_read_arg(list, pf);
 	va_end(list);
 	return (pf->value);
 }
@@ -128,13 +131,14 @@ int main()
 	f = 9223372036854775807999.0;
 	d = 123456789.0;
 	l = 22222.999999999999999;
-	z = -12345;
+	z = -42;
 	si = -32765;
 	signed char a;
 	a = 'b';
 //	lli = -9223372036854775808;
-	printf("\n%d\n", ft_printf("%s str = %s%s%s%s", s, s, s, s, "89"));
-	printf("\n%d\n", printf("%s str = %s%s%s%s", s, s, s, s, "89"));
+//	printf("\n%d\n", ft_printf("%.0p%.p", &s, &s));
+	printf("%2.0p", &z);
+//	printf("\n%d\n", printf("%.0p, %.p", 0, &s));
 //	printf("\n%d\n", printf("%u", ul));
 	return (0);
 }

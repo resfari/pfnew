@@ -58,11 +58,16 @@ int		ft_int_width_display_minus(t_fl *fl, t_pf *pf)
 	return (0);
 }
 
-int		ft_int_width_display_offminus(int acc, int len, t_fl *fl, t_pf *pf, int sign)
+int		ft_int_width_display_offminus(int acc, int len, t_fl *fl, t_pf *pf, int sign, char *str)
 {
-
 	if (fl->nol == 1)
+	{
 		ft_int_sign_display(sign, fl, pf);
+	}
+	if (len == 1 && str[0] == '0' && fl->accuracy == 0)
+	{
+		fl->width++;
+	}
 	while (fl->width > acc + len)
 	{
 		fl->nol == 1 && fl->accuracy == -1? write(1, "0", 1) : write(1, " ", 1);
@@ -87,9 +92,16 @@ void	ft_int_accuracy_display(int acc, t_fl *fl, t_pf *pf)
 
 void	ft_int_display_str(char *str, int len, t_pf *pf, t_fl *fl)
 {
-	write(1, str, len);
-	pf->value = pf->value + len;
-	fl->width = fl->width - len;
+	if (len == 1 && str[0] == '0' && fl->accuracy == 0)
+	{
+		len = 0;
+	}
+	else
+	{
+		write(1, str, len);
+		pf->value = pf->value + len;
+		fl->width = fl->width - len;
+	}
 }
 
 void	ft_int_display(char *str, t_fl *fl, t_pf *pf, int sign)
@@ -100,6 +112,8 @@ void	ft_int_display(char *str, t_fl *fl, t_pf *pf, int sign)
 	acc = 0;
 	len = ft_strlen(str);
 	ft_size_width_check_flags(sign, fl);
+	if (len == 1 && str[0] == '0' && fl->accuracy == 0)
+		len = 0;
 	if (fl->accuracy > len)
 		acc = fl->accuracy - len;
 	if (fl->flagminus == 1)
@@ -111,7 +125,7 @@ void	ft_int_display(char *str, t_fl *fl, t_pf *pf, int sign)
 	}
 	else
 	{
-		ft_int_width_display_offminus(acc, len, fl, pf, sign);
+		ft_int_width_display_offminus(acc, len, fl, pf, sign, str);
 		ft_int_accuracy_display(acc, fl, pf);
 		ft_int_display_str(str, len, pf, fl);
 	}
@@ -137,7 +151,7 @@ intmax_t		ft_int_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	else if (fl->sl == 1)
 		num = (long)(va_arg(list, long int));
 	else
-	num = (int)(va_arg(list, int));
+		num = (int)(va_arg(list, int));
 	num >= 0 ? sign++ : sign--;
 	if (num < 0)
 		num = num * (-1);

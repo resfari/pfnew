@@ -20,10 +20,21 @@ void	ft_octo_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
 
 	i = 0;
 	acc = 0;
-	if (fl->flaglattice == 1)
-		fl->width--;
+	if ((len == 1 && str[i] == '0') && fl->accuracy == 0)
+		len = 0;
 	if (fl->accuracy > len)
 		acc = fl->accuracy - len;
+	if (fl->flaglattice == 1)
+	{
+		if (len == 1 && str[i] == '0')
+			len = 0;
+		fl->width--;
+	}
+	if (fl->flaglattice == 1 && fl->nol == 1)
+	{
+		write(1, "0", 1);
+		pf->value++;
+	}
 	while (i + len + acc < fl->width)
 	{
 		fl->nol == 1 && fl->accuracy == -1 ? write(1, "0", 1) : write(1, " ", 1);
@@ -31,18 +42,18 @@ void	ft_octo_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
 		pf->value++;
 	}
 	i = 0;
-	if (fl->flaglattice == 1)
-	{
-		write(1, "0", 1);
-		pf->value++;
-	}
 	while (acc > 0)
 	{
 		acc--;
 		pf->value++;
 		write(1, "0", 1);
 	}
-	while (str[i] != '\0')
+	if (fl->flaglattice == 1 && fl->nol == 0)
+	{
+		write(1, "0", 1);
+		pf->value++;
+	}
+	while (len != 0 && str[i] != '\0')
 	{
 		write(1, &str[i], 1);
 		pf->value++;
@@ -107,7 +118,7 @@ uintmax_t		ft_octo_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	else if (fl->sl == 1)
 		num = (unsigned long)(va_arg(list, unsigned long int));
 	else
-	num = (unsigned int)(va_arg(list, unsigned int));
+		num = (unsigned int)(va_arg(list, unsigned int));
 	num = (uintmax_t)num;
 	str = ft_itoa_base(num, 8);
 	ft_octo_display(str, fl, pf);

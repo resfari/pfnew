@@ -22,7 +22,7 @@ int		ft_str_no_accuracy_no_minus(t_fl *fl, char *arg, t_pf *pf, int len)
 	{
 		while (fl->width > len)
 		{
-			write(1, " ", 1);
+			fl->nol == 1 ? write(1, "0", 1) : write(1, " ", 1);
 			pf->value++;
 			fl->width--;
 		}
@@ -124,6 +124,12 @@ int		ft_concstr(char *s, va_list list, t_pf *pf)
 
 	fl = (t_fl*)malloc(sizeof(t_fl) * 1);
 	str = va_arg(list, char *);
+	if (str == NULL)
+	{
+		write(1, "(null)", 6);
+		pf->value = pf->value + 6;
+		return (0);
+	}
 	ft_flags(s, fl);
 	ft_width(s, fl);
 	ft_accuracy_str(s, fl);

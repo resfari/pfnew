@@ -122,12 +122,6 @@ int		ft_width(char *str, t_fl *fl)
 	int i;
 
 	i = fl->lastpos;
-	if (str[i] == '0' && i == fl->lastpos)
-	{
-		fl->nol = 1;
-		while (str[i] == '0')
-			i++;
-	}
 	while (ft_isdigit((int)str[i]) == 1)
 	{
 		fl->width = fl->width * 10 + (str[i] - 48);
@@ -154,11 +148,17 @@ char	ft_flagdefenition(t_fl *fl, char c)
 		fl->flagspace = 1;
 		return (c);
 	}
-	else
+	if (c == '#')
 	{
 		fl->flaglattice = 1;
 		return (c);
 	}
+	if (c == '0')
+	{
+		fl->nol = 1;
+		return (c);
+	}
+	return (c);
 }
 
 int		ft_flags(char *str, t_fl *fl)
@@ -169,7 +169,7 @@ int		ft_flags(char *str, t_fl *fl)
 
 	i = 0;
 	ft_flagsinit(fl);
-	flags = "-+ #";
+	flags = "-+ #0";
 	if (ft_strchr(flags, str[i]) != NULL)
 	{
 		c = ft_flagdefenition(fl, str[i]);
@@ -190,6 +190,12 @@ int		ft_flags(char *str, t_fl *fl)
 					c = ft_flagdefenition(fl, str[i]);
 					while (str[i] == c)
 						i++;
+					if (ft_strchr(flags, str[i]) != NULL)
+					{
+						c = ft_flagdefenition(fl, str[i]);
+						while (str[i] == c)
+							i++;
+					}
 				}
 			}
 		}

@@ -17,7 +17,7 @@ int		ft_charhelp(t_fl *fl, int arg, t_pf *pf)
 {
 	while (fl->width - 1 > 0)
 	{
-		write (1, " ", 1);
+		fl->nol == 1 ? write(1, "0", 1) : write(1, " ", 1);
 		pf->value++;
 		fl->width--;
 	}

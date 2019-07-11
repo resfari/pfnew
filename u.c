@@ -60,10 +60,13 @@ void	ft_uint_display(char *str, t_fl *fl, t_pf *pf)
 
 	acc = 0;
 	len = ft_strlen(str);
+	if (len == 1 && str[0] == '0' && fl->accuracy == 0)
+		len = 0;
 	if (fl->accuracy > len)
 		acc = fl->accuracy - len;
 	if (fl->flagminus == 1)
 	{
+
 		ft_uint_accuracy_display(acc, fl, pf);
 		ft_uint_display_str(str, len, pf, fl);
 		ft_uint_width_display_minus(fl, pf);
@@ -94,7 +97,7 @@ uintmax_t		ft_uint_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	else if (fl->sl == 1)
 		num = (unsigned long)(va_arg(list, unsigned long int));
 	else
-	num = (unsigned int)(va_arg(list, unsigned int));
+		num = (unsigned int)(va_arg(list, unsigned int));
 	num = (uintmax_t)num;
 	str = ft_utoa(num);
 	ft_uint_display(str, fl, pf);

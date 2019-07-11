@@ -21,7 +21,7 @@ char	*ft_ltoa(intmax_t n)
 	int			len;
 
 	if (n == -9223372036854775807 - 1)
-		return (ft_strdup("-9223372036854775808"));
+		return (ft_strdup("9223372036854775808"));
 	len = 1;
 	n < 0 ? ++len : 0;
 	nb = n < 0 ? -n : n;

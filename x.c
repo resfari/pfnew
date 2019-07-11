@@ -20,29 +20,39 @@ void	ft_hex_display_minus(char *str, t_fl *fl, t_pf *pf, int len, char c)
 
 	i = 0;
 	acc = 0;
-	if (fl->flaglattice == 1)
-		fl->width = fl->width - 2;
+	if ((len == 1 && str[i] == '0') && fl->accuracy == 0)
+	{
+		fl->flaglattice = 0;
+		len = 0;
+	}
 	if (fl->accuracy > len)
 		acc = fl->accuracy - len;
-	while (i + len + acc < fl->width)
-	{
-		fl->nol == 1 && fl->accuracy == -1 ? write(1, "0", 1) : write(1, " ", 1);
-		i++;
-		pf->value++;
-	}
-	i = 0;
 	if (fl->flaglattice == 1)
+		fl->width = fl->width - 2;
+	if ((len != 1 && str[0] != '0') && fl->flaglattice == 1 && fl->nol == 1)
 	{
 		c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
 		pf->value = pf->value + 2;
 	}
+	while (i + len + acc < fl->width)
+	{
+		fl->nol == 1 && (fl->accuracy == -1 || fl->accuracy == 0) ? write(1, "0", 1) : write(1, " ", 1);
+		i++;
+		pf->value++;
+	}
+	i = 0;
 	while (acc > 0)
 	{
 		acc--;
 		pf->value++;
 		write(1, "0", 1);
 	}
-	while (str[i] != '\0')
+	if ((len != 1 && str[0] != '0') && fl->flaglattice == 1 && fl->nol == 0)
+	{
+		c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
+		pf->value = pf->value + 2;
+	}
+	while (len != 0 && str[i] != '\0')
 	{
 		if (ft_isalpha((int)(str[i])))
 			c == 'X' ? ft_putchar(str[i]) : ft_putchar(str[i] + 32);
@@ -111,7 +121,7 @@ uintmax_t		ft_hex_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	else if (fl->sl == 1)
 		num = (unsigned long)(va_arg(list, unsigned long int));
 	else
-	num = (unsigned int)(va_arg(list, unsigned int));
+		num = (unsigned int)(va_arg(list, unsigned int));
 	num = (uintmax_t)num;
 	str = ft_itoa_base(num, 16);
 	ft_hex_display(str, fl, pf, c);
