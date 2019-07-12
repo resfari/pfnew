@@ -125,6 +125,8 @@ uintmax_t		ft_hex_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	num = (uintmax_t)num;
 	str = ft_itoa_base(num, 16);
 	ft_hex_display(str, fl, pf, c);
+	if (num != 0)
+		free(str);
 	return (0);
 }
 
@@ -143,5 +145,6 @@ int		ft_concx(char *s, va_list list, char c, t_pf *pf)
 	ft_accuracy_str(s, fl1);
 	ft_lllhhh(s, fl1);
 	x = ft_hex_ditsribution(list, c, fl1, pf);
+	free(fl1);
 	return (0);
 }

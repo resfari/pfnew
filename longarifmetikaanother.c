@@ -13,29 +13,6 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
-//int		*ft_add_one(int *res, int masssize, t_summ *summ)
-//{
-//	int *final;
-//	int i;
-//	int j;
-//
-//	i = 1;
-//	j = 0;
-//	final = (int*)malloc(sizeof(int) * (masssize + 1));
-//	final[0] = 1;
-//	while (j < masssize)
-//	{
-//		final[i] = res[j];
-//		i++;
-//		j++;
-//	}
-//	free(res);
-//	res = final;
-//	summ->size++;
-//
-//	return (res);
-//}
-
 t_summ		*ft_first_mean_two(int exp, t_summ *summ, int masssize)
 {
 	int i;
@@ -52,7 +29,6 @@ t_summ		*ft_first_mean_two(int exp, t_summ *summ, int masssize)
 	ft_zero(summ->mass, masssize);
 	summ->mass[0] = 2;
 	summ->size = 0;
-
 	if (exp == 1)
 		return (summ);
 	else if (exp == 0)

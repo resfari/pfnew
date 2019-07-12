@@ -54,15 +54,17 @@ typedef	struct			s_flags
 	int					sll;
 	int					sh;
 	int					shh;
+	int					sign;
+	int					len;
 }						t_fl;
 
 typedef	struct			s_ar
 {
-						int *mass;
-						int size;
-						int firsth;
-						int count;
-						int exp;
+	int *mass;
+	int size;
+	int firsth;
+	int count;
+	int exp;
 }						t_ar;
 
 typedef	struct			s_summ
@@ -117,8 +119,10 @@ int		ft_lorllcheck(char *str, t_fl *fl);
 void	ft_conclusiondouble(t_fl *fl1, double x);
 void	ft_conclusionlongdouble(t_fl *fl1, long double x);
 void	ft_accuracy_in_work(t_fl *fl, t_summ *summ);
-void	ft_calcsumm_final(int *first, int *second, int masssize, t_final *final);
-void	ft_calcsumm_final_before(int *first, int *second, int masssize, t_final *final);
+void	ft_calcsumm_final(int *first, int *second, int masssize,
+		t_final *final);
+void	ft_calcsumm_final_before(int *first, int *second, int masssize,
+		t_final *final);
 int		ft_conclusionproc(t_fl *fl, t_pf *pf);
 int		ft_accuracy_str(char *str, t_fl *fl);
 int		ft_lllhhh(char *str, t_fl *fl);
@@ -132,5 +136,12 @@ int 	ft_concu(char *s, va_list list, char c, t_pf *pf);
 int 	ft_concpointer(char *s, va_list list, t_pf *pf);
 int		ft_concx(char *s, va_list list, char c, t_pf *pf);
 int		ft_conco(char *s, va_list list, char c, t_pf *pf);
+void	ft_size_width_check_flags(t_fl *fl);
+int		ft_int_sign_display(t_fl *fl, t_pf *pf);
+int		ft_int_width_display_minus(t_fl *fl, t_pf *pf);
+void	ft_int_accuracy_display(int acc, t_fl *fl, t_pf *pf);
+void	ft_octo_norm(char *str, t_pf *pf, int len);
+void	ft_pf_write_norm(t_pf *pf, t_fl *fl, int norm);
+void	ft_free_fl1(t_fl *fl);
 
 #endif

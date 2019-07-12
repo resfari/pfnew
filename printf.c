@@ -9,7 +9,6 @@
 /*   Updated: 2019/06/19 17:00:03 by lgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "./libft/libft.h"
 #include "printf.h"
 
@@ -94,51 +93,33 @@ void		ft_fill_pf(t_pf *pf)
 	pf->value = 0;
 }
 
+void	ft_free_pf(t_pf *pf)
+{
+	char *str;
+	char **s;
+
+	str = pf->str;
+	s = pf->procent;
+	if (s != NULL)
+		free(s);
+	if (*str)
+		free(str);
+	free(pf);
+}
+
 int		ft_printf(const char *restrict format, ...)
 {
 	t_pf	*pf;
 	va_list list;
 	int x;
 
-	va_start(list, format);
 	pf = (t_pf*)malloc(sizeof(t_pf) * 1);
+	va_start(list, format);
 	ft_fill_pf(pf);
 	x = ft_read_format(format, pf);
 	if (x == 1)
 		ft_read_arg(list, pf);
 	va_end(list);
+	ft_free_pf(pf);
 	return (pf->value);
-}
-
-int main()
-{
-	long double l;
-	double d;
-	float f;
-	char c;
-	char *s;
-	int z;
-	long int longint;
-	short int si;
-	unsigned char uch;
-	unsigned int ul;
-
-	uch = 'a';
-	ul = -151;
-	longint = -2147483649;
-	s = "123456";
-	c = 'a';
-	f = 9223372036854775807999.0;
-	d = 123456789.0;
-	l = 22222.999999999999999;
-	z = -42;
-	si = -32765;
-	signed char a;
-	a = 'b';
-//	lli = -9223372036854775808;
-//	printf("\n%d\n", ft_printf("%.0p%.p", &s, &s));
-	printf("%2.0p", &z);
-//	printf("\n%d\n", printf("%.0p, %.p", 0, &s));
-//	printf("\n%d\n", printf("%u", ul));
-	return (0);
 }

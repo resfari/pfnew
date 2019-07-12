@@ -43,16 +43,14 @@ int		ft_conclusionchar(t_fl *fl, int arg, t_pf *pf)
 		}
 	}
 	if (fl->flagminus == 0)
-	{
 		ft_charhelp(fl, arg, pf);
-	}
 	return (1);
 }
 
 int		ft_concchar(char *s, va_list list, t_pf *pf)
 {
-	int c;
-	t_fl *fl;
+	int		c;
+	t_fl	*fl;
 
 	fl = (t_fl*)malloc(sizeof(t_fl) * 1);
 	c = va_arg(list, int);
@@ -60,5 +58,6 @@ int		ft_concchar(char *s, va_list list, t_pf *pf)
 	ft_width(s, fl);
 	ft_accuracy_str(s, fl);
 	ft_conclusionchar(fl, c, pf);
+	free(fl);
 	return (0);
 }

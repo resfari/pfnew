@@ -128,11 +128,14 @@ int		ft_concstr(char *s, va_list list, t_pf *pf)
 	{
 		write(1, "(null)", 6);
 		pf->value = pf->value + 6;
+		free(fl);
 		return (0);
 	}
 	ft_flags(s, fl);
 	ft_width(s, fl);
 	ft_accuracy_str(s, fl);
 	ft_conclusionstr(fl, str, pf);
+	s = NULL;
+	free(fl);
 	return (0);
 }

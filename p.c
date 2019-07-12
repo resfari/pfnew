@@ -13,7 +13,7 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
-void	ft_ptr_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
+void			ft_ptr_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
 {
 	int i;
 
@@ -30,13 +30,14 @@ void	ft_ptr_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
 	fl->width = fl->width - 2;
 	while (str[i] != '\0')
 	{
-		ft_isalpha((int)str[i]) == 1 ? ft_putchar(str[i] + 32) : ft_putchar(str[i]);
+		ft_isalpha((int)str[i]) == 1 ? ft_putchar(str[i] + 32)
+		: ft_putchar(str[i]);
 		pf->value++;
 		i++;
 	}
 }
 
-void	ft_ptr_display(char *str, t_fl *fl, t_pf *pf)
+void			ft_ptr_display(char *str, t_fl *fl, t_pf *pf)
 {
 	int len;
 	int i;
@@ -50,15 +51,15 @@ void	ft_ptr_display(char *str, t_fl *fl, t_pf *pf)
 		fl->width = fl->width - 2;
 		while (str[i] != '\0')
 		{
-			ft_isalpha((int)str[i]) == 1 ? ft_putchar(str[i] + 32) : ft_putchar(str[i]);
+			ft_isalpha((int)str[i]) == 1 ?
+			ft_putchar(str[i] + 32) : ft_putchar(str[i]);
 			pf->value++;
 			i++;
 		}
 		while (i < fl->width)
 		{
-			write(1, " ", 1);
+			ft_pf_write_norm(pf, fl, 2);
 			i++;
-			pf->value++;
 		}
 	}
 	else
@@ -67,23 +68,24 @@ void	ft_ptr_display(char *str, t_fl *fl, t_pf *pf)
 
 uintmax_t		ft_pointer_ditsribution(va_list list, t_fl *fl, t_pf *pf)
 {
-	intmax_t num;
-	char *str;
-	int i;
+	intmax_t	num;
+	char		*str;
+	int			i;
 
-	(void)fl;
 	i = 0;
 	num = (unsigned long)(va_arg(list, unsigned long int));
 	num = (uintmax_t)num;
 	str = ft_itoa_base(num, 16);
 	ft_ptr_display(str, fl, pf);
+	if (num != 0)
+		free(str);
 	return (0);
 }
 
-int 	ft_concpointer(char *s, va_list list, t_pf *pf)
+int				ft_concpointer(char *s, va_list list, t_pf *pf)
 {
-	intmax_t x;
-	t_fl *fl1;
+	intmax_t	x;
+	t_fl		*fl1;
 
 	fl1 = (t_fl*)malloc(sizeof(t_fl) * 1);
 	ft_flags(s, fl1);
@@ -92,5 +94,6 @@ int 	ft_concpointer(char *s, va_list list, t_pf *pf)
 	if (fl1->accuracy != -1 || (s[0] == '0' && ft_strlen(s) == 1))
 		return (0);
 	x = ft_pointer_ditsribution(list, fl1, pf);
+	free(fl1);
 	return (0);
 }

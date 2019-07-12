@@ -101,6 +101,7 @@ uintmax_t		ft_uint_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	num = (uintmax_t)num;
 	str = ft_utoa(num);
 	ft_uint_display(str, fl, pf);
+	free(str);
 	return (0);
 }
 
@@ -119,5 +120,6 @@ int 	ft_concu(char *s, va_list list, char c, t_pf *pf)
 	ft_accuracy_str(s, fl1);
 	ft_lllhhh(s, fl1);
 	x = ft_uint_ditsribution(list, c, fl1, pf);
+	free(fl1);
 	return (0);
 }

@@ -33,8 +33,8 @@ int		ft_conclongdouble(va_list list, t_fl *fl1)
 
 int		ft_concdouble(char *s, va_list list)
 {
-	double x;
-	t_fl *fl1;
+	double	x;
+	t_fl	*fl1;
 
 	fl1 = (t_fl*)malloc(sizeof(t_fl) * 1);
 	ft_flags(s, fl1);
@@ -44,19 +44,20 @@ int		ft_concdouble(char *s, va_list list)
 	if (fl1->l == 80)
 	{
 		ft_conclongdouble(list, fl1);
-		return (0);
+		ft_free_fl1(fl1);
 	}
 	else if (fl1->l == 32)
 	{
 		ft_concfloat(list, fl1);
-		return (0);
+		ft_free_fl1(fl1);
 	}
 	else
 	{
 		x = va_arg(list, double);
 		ft_conclusiondouble(fl1, x);
-		return (0);
+		ft_free_fl1(fl1);
 	}
+	return (0);
 }
 
 int		ft_treatment(char *str, va_list list, t_pf *pf)
@@ -100,9 +101,11 @@ int		ft_read_arg(va_list list, t_pf *pf)
 		{
 			ft_treatment(pf->procent[count], list, pf);
 			i = ft_strlen(pf->procent[count]) + i;
+			if (pf->procent[count])
+				free(pf->procent[count]);
 			count++;
 		}
-		else if(i < len)
+		else if (i < len)
 		{
 			write(1, &pf->str[i], 1);
 			pf->value++;
