@@ -9,31 +9,16 @@
 /*   Updated: 2019/06/19 17:00:03 by lgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "./libft/libft.h"
 #include "printf.h"
 
-int		ft_check_str(char *str)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '%')
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 char	*ft_check_for_flags(char *str, t_pf *pf)
 {
-	const char *flags;
-	int j;
-	int k;
-	char *newstr;
+	const char	*flags;
+	int			j;
+	int			k;
+	char		*newstr;
 
 	pf->i++;
 	j = pf->i;
@@ -47,11 +32,7 @@ char	*ft_check_for_flags(char *str, t_pf *pf)
 				return (NULL);
 			newstr[pf->i - j + 1] = '\0';
 			while (j <= pf->i)
-			{
-				newstr[k] = str[j];
-				j++;
-				k++;
-			}
+				newstr[k++] = str[j++];
 			return (newstr);
 		}
 		pf->i++;
@@ -86,7 +67,7 @@ int		ft_read_format(const char *format, t_pf *pf)
 	return (1);
 }
 
-void		ft_fill_pf(t_pf *pf)
+void	ft_fill_pf(t_pf *pf)
 {
 	pf->i = 0;
 	pf->j = 0;
@@ -109,9 +90,9 @@ void	ft_free_pf(t_pf *pf)
 
 int		ft_printf(const char *restrict format, ...)
 {
-	t_pf	*pf;
-	va_list list;
-	int x;
+	t_pf		*pf;
+	va_list		list;
+	int			x;
 
 	pf = (t_pf*)malloc(sizeof(t_pf) * 1);
 	va_start(list, format);
@@ -122,4 +103,25 @@ int		ft_printf(const char *restrict format, ...)
 	va_end(list);
 	ft_free_pf(pf);
 	return (pf->value);
+}
+
+int main()
+{
+	long double Lf;
+	double lf;
+	float f;
+
+	f = 123.3456;
+	lf = 0.0;
+	Lf = 134342.34546456;
+	ft_printf("\nsymbols float = %d\n", ft_printf("%f", f));
+	printf("\nsymbols float = %d\n", printf("%f", f));
+
+	ft_printf("\nsymbols lfloat = %d\n", ft_printf("%.10lf", lf));
+	printf("\nsymbols lfloat = %d\n", printf("%.10lf", lf));
+	ft_printf("\nsymbols Lfloat = %d\n", ft_printf("%.20Lf", Lf));
+	printf("\nsymbols Lfloat = %d\n", printf("%.20Lf", Lf));
+//	ft_printf("\nsymbols double = %d\n", ft_printf("%lf", lf));
+//	ft_printf("\nsymbols longdouble = %d\n", ft_printf("%Lf", Lf));
+	return (0);
 }

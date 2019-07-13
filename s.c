@@ -49,18 +49,16 @@ int		ft_str_check_width(t_fl *fl, char *arg, t_pf *pf)
 	{
 		if (fl->width > fl->accuracy)
 		{
-			while (fl->width > fl->accuracy)
+			while (fl->width-- > fl->accuracy)
 			{
 				write(1, " ", 1);
 				pf->value++;
-				fl->width--;
 			}
 		}
-		while (fl->accuracy > 0)
+		while (fl->accuracy-- > 0 && arg[i] != '\0')
 		{
 			write(1, &arg[i], 1);
 			i++;
-			fl->accuracy--;
 			pf->value++;
 		}
 	}
@@ -94,23 +92,18 @@ int		ft_conclusionstr(t_fl *fl, char *arg, t_pf *pf)
 	{
 		if (fl->accuracy >= 0)
 		{
-			while (fl->accuracy > 0 && arg[i] != '\0')
+			while (fl->accuracy-- > 0 && arg[i] != '\0')
 			{
 				write(1, &arg[i], 1);
 				pf->value++;
 				i++;
-				fl->accuracy--;
 				fl->width--;
 			}
 		}
 		else
 			ft_str_no_accuracy(fl, arg, pf);
-		while (fl->width > 0)
-		{
-			write(1, " ", 1);
-			fl->width--;
-			pf->value++;
-		}
+		while (fl->width-- > 0)
+			ft_hex_norm(fl, pf, 1);
 	}
 	else
 		ft_str_check_width(fl, arg, pf);

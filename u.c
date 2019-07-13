@@ -13,29 +13,7 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
-int		ft_uint_width_display_minus(t_fl *fl, t_pf *pf)
-{
-	while (fl->width > 0)
-	{
-		write(1, " ", 1);
-		pf->value++;
-		fl->width--;
-	}
-	return (0);
-}
-
-int		ft_uint_width_display_offminus(int acc, int len, t_fl *fl, t_pf *pf)
-{
-	while (fl->width > acc + len)
-	{
-		fl->nol == 1 && fl->accuracy == -1? write(1, "0", 1) : write(1, " ", 1);
-		pf->value++;
-		fl->width--;
-	}
-	return (0);
-}
-
-void	ft_uint_accuracy_display(int acc, t_fl *fl, t_pf *pf)
+void		ft_uint_accuracy_display(int acc, t_fl *fl, t_pf *pf)
 {
 	while (acc > 0)
 	{
@@ -46,14 +24,14 @@ void	ft_uint_accuracy_display(int acc, t_fl *fl, t_pf *pf)
 	}
 }
 
-void	ft_uint_display_str(char *str, int len, t_pf *pf, t_fl *fl)
+void		ft_uint_display_str(char *str, int len, t_pf *pf, t_fl *fl)
 {
 	write(1, str, len);
 	pf->value = pf->value + len;
 	fl->width = fl->width - len;
 }
 
-void	ft_uint_display(char *str, t_fl *fl, t_pf *pf)
+void		ft_uint_display(char *str, t_fl *fl, t_pf *pf)
 {
 	int len;
 	int acc;
@@ -66,7 +44,6 @@ void	ft_uint_display(char *str, t_fl *fl, t_pf *pf)
 		acc = fl->accuracy - len;
 	if (fl->flagminus == 1)
 	{
-
 		ft_uint_accuracy_display(acc, fl, pf);
 		ft_uint_display_str(str, len, pf, fl);
 		ft_uint_width_display_minus(fl, pf);
@@ -79,11 +56,11 @@ void	ft_uint_display(char *str, t_fl *fl, t_pf *pf)
 	}
 }
 
-uintmax_t		ft_uint_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
+uintmax_t	ft_uint_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 {
-	intmax_t num;
-	char *str;
-	int i;
+	intmax_t	num;
+	char		*str;
+	int			i;
 
 	i = 0;
 	if (c == 'U')
@@ -105,10 +82,10 @@ uintmax_t		ft_uint_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	return (0);
 }
 
-int 	ft_concu(char *s, va_list list, char c, t_pf *pf)
+int			ft_concu(char *s, va_list list, char c, t_pf *pf)
 {
-	uintmax_t x;
-	t_fl *fl1;
+	uintmax_t	x;
+	t_fl		*fl1;
 
 	fl1 = (t_fl*)malloc(sizeof(t_fl) * 1);
 	fl1->sl = 0;

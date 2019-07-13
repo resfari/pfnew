@@ -13,46 +13,22 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
-void	ft_hex_display_minus(char *str, t_fl *fl, t_pf *pf, int len, char c)
+void			ft_hex_display_minus_p2(char *str, t_fl *fl, t_pf *pf, char c)
 {
 	int i;
-	int acc;
 
 	i = 0;
-	acc = 0;
-	if ((len == 1 && str[i] == '0') && fl->accuracy == 0)
+	while (fl->acc_x-- > 0)
 	{
-		fl->flaglattice = 0;
-		len = 0;
-	}
-	if (fl->accuracy > len)
-		acc = fl->accuracy - len;
-	if (fl->flaglattice == 1)
-		fl->width = fl->width - 2;
-	if ((len != 1 && str[0] != '0') && fl->flaglattice == 1 && fl->nol == 1)
-	{
-		c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
-		pf->value = pf->value + 2;
-	}
-	while (i + len + acc < fl->width)
-	{
-		fl->nol == 1 && (fl->accuracy == -1 || fl->accuracy == 0) ? write(1, "0", 1) : write(1, " ", 1);
-		i++;
-		pf->value++;
-	}
-	i = 0;
-	while (acc > 0)
-	{
-		acc--;
 		pf->value++;
 		write(1, "0", 1);
 	}
-	if ((len != 1 && str[0] != '0') && fl->flaglattice == 1 && fl->nol == 0)
+	if ((fl->len != 1 && str[0] != '0') && fl->flaglattice == 1 && fl->nol == 0)
 	{
 		c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
 		pf->value = pf->value + 2;
 	}
-	while (len != 0 && str[i] != '\0')
+	while (fl->len != 0 && str[i] != '\0')
 	{
 		if (ft_isalpha((int)(str[i])))
 			c == 'X' ? ft_putchar(str[i]) : ft_putchar(str[i] + 32);
@@ -63,28 +39,47 @@ void	ft_hex_display_minus(char *str, t_fl *fl, t_pf *pf, int len, char c)
 	}
 }
 
-void	ft_hex_display(char *str, t_fl *fl, t_pf *pf, char c)
+void			ft_hex_display_minus(char *str, t_fl *fl, t_pf *pf, char c)
 {
-	int len;
 	int i;
 
 	i = 0;
-	len = ft_strlen(str);
+	fl->acc_x = 0;
+	if ((fl->len == 1 && str[i] == '0') && fl->accuracy == 0)
+	{
+		fl->flaglattice = 0;
+		fl->len = 0;
+	}
+	if (fl->accuracy > fl->len)
+		fl->acc_x = fl->accuracy - fl->len;
+	if (fl->flaglattice == 1)
+		fl->width = fl->width - 2;
+	if ((fl->len != 1 && str[0] != '0') && fl->flaglattice == 1 && fl->nol == 1)
+	{
+		c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
+		pf->value = pf->value + 2;
+	}
+	while (i++ + fl->len + fl->acc_x < fl->width)
+	{
+		fl->nol == 1 && (fl->accuracy == -1 || fl->accuracy == 0) ?
+		write(1, "0", 1) : write(1, " ", 1);
+		pf->value++;
+	}
+	ft_hex_display_minus_p2(str, fl, pf, c);
+}
+
+void			ft_hex_display(char *str, t_fl *fl, t_pf *pf, char c)
+{
+	int i;
+
+	i = 0;
+	fl->len = ft_strlen(str);
 	if (fl->flagminus == 1)
 	{
 		if (fl->flaglattice == 1)
-		{
-			c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
-			pf->value = pf->value + 2;
-			fl->width = fl->width - 2;
-		}
-		while (fl->accuracy > len)
-		{
-			fl->accuracy--;
-			pf->value++;
-			write(1, "0", 1);
-			fl->width--;
-		}
+			c == 'x' ? ft_hex_norm(fl, pf, 3) : ft_hex_norm(fl, pf, 4);
+		while (fl->accuracy-- > fl->len)
+			ft_hex_norm(fl, pf, 2);
 		while (str[i] != '\0')
 		{
 			if (ft_isalpha((int)(str[i])))
@@ -94,22 +89,18 @@ void	ft_hex_display(char *str, t_fl *fl, t_pf *pf, char c)
 			pf->value++;
 			i++;
 		}
-		while (i < fl->width)
-		{
-			write(1, " ", 1);
-			i++;
-			pf->value++;
-		}
+		while (i++ < fl->width)
+			ft_hex_norm(fl, pf, 1);
 	}
 	else
-		ft_hex_display_minus(str, fl, pf, len, c);
+		ft_hex_display_minus(str, fl, pf, c);
 }
 
 uintmax_t		ft_hex_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 {
-	intmax_t num;
-	char *str;
-	int i;
+	intmax_t	num;
+	char		*str;
+	int			i;
 
 	i = 0;
 	if (fl->shh == 1)
@@ -130,10 +121,10 @@ uintmax_t		ft_hex_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	return (0);
 }
 
-int		ft_concx(char *s, va_list list, char c, t_pf *pf)
+int				ft_concx(char *s, va_list list, char c, t_pf *pf)
 {
-	uintmax_t x;
-	t_fl *fl1;
+	uintmax_t	x;
+	t_fl		*fl1;
 
 	fl1 = (t_fl*)malloc(sizeof(t_fl) * 1);
 	fl1->sl = 0;

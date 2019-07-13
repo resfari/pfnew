@@ -56,6 +56,9 @@ typedef	struct			s_flags
 	int					shh;
 	int					sign;
 	int					len;
+	int					acc_x;
+	int					i;
+	int					exp;
 }						t_fl;
 
 typedef	struct			s_ar
@@ -85,8 +88,9 @@ typedef	struct			s_final
 	int *before;
 	int perenos;
 	int perenos2;
+	int *acc;
+	int i;
 }						t_final;
-
 
 int		ft_read_arg(va_list list, t_pf *pf);
 int		ft_conclusionstr(t_fl *fl, char *arg, t_pf *pf);
@@ -99,7 +103,7 @@ int		ft_conclusionchar(t_fl *fl, int arg, t_pf *pf);
 int		ft_checkplus(t_fl *fl);
 void	ft_writenolspace(int start, int end, int k);
 int		ft_concfloat(va_list list, t_fl *fl1);
-void	ft_conclusionfloat(t_fl *fl1, float x);
+int		ft_conclusionfloat(t_fl *fl1, float x);
 void	ft_putld(long n, int *p);
 int		*ft_calcsumm(int *first, int *second, int masssize);
 int		*ft_calcmulti(int power);
@@ -114,10 +118,10 @@ t_summ	*ft_delete_two(t_summ *summ, int masssize);
 int		*ft_calcsumm_two(int *first, int *second, t_summ *summ, int masssize);
 t_summ	*ft_first_mean_two(int exp, t_summ *summ, int masssize);
 int 	*ft_reverse(int *mass,int count, int size, int masssize);
-void		ft_calc_mantissa_over(int *man, int exp, int i, t_fl *fl);
+void	ft_calc_mantissa_over(int *man, t_fl *fl);
 int		ft_lorllcheck(char *str, t_fl *fl);
-void	ft_conclusiondouble(t_fl *fl1, double x);
-void	ft_conclusionlongdouble(t_fl *fl1, long double x);
+int		ft_conclusiondouble(t_fl *fl1, double x);
+int		ft_conclusionlongdouble(t_fl *fl1, long double x);
 void	ft_accuracy_in_work(t_fl *fl, t_summ *summ);
 void	ft_calcsumm_final(int *first, int *second, int masssize,
 		t_final *final);
@@ -143,5 +147,17 @@ void	ft_int_accuracy_display(int acc, t_fl *fl, t_pf *pf);
 void	ft_octo_norm(char *str, t_pf *pf, int len);
 void	ft_pf_write_norm(t_pf *pf, t_fl *fl, int norm);
 void	ft_free_fl1(t_fl *fl);
+void	ft_hex_norm(t_fl *fl, t_pf *pf, int norm);
+int		ft_uint_width_display_offminus(int acc, int len, t_fl *fl, t_pf *pf);
+int		ft_uint_width_display_minus(t_fl *fl, t_pf *pf);
+int		ft_check_str(char *str);
+void		ft_float_write(t_fl *fl, int norm);
+int		ft_check_exp(char *str, t_fl *fl);
+char	*ft_checkbindouble(t_fl *fl1, double x);
+char	*ft_checkbinfloat(t_fl *fl1, float x);
+char	*ft_checkbinlongdouble(t_fl *fl1, long double x);
+int		*ft_check_mantissa(char *str, t_fl *fl);
+int		ft_check_sign(char c);
+void	ft_calc_mantissa_before(int *man, t_fl *fl);
 
 #endif

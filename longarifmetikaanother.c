@@ -58,6 +58,7 @@ t_summ		*ft_first_mean_two(int exp, t_summ *summ, int masssize)
 					summ->size++;
 				}
 			}
+			free(summ->mass);
 			summ->mass = ft_reverse(new, 0, summ->size, masssize);
 			i++;
 		}
@@ -91,6 +92,7 @@ t_summ		*ft_delete_two(t_summ *summ, int masssize)
 		j++;
 		i++;
 	}
+	free(summ->mass);
 	summ->mass = new;
 	return (summ);
 }
@@ -150,5 +152,6 @@ int		*ft_calcsumm_two(int *first, int *second, t_summ *summ, int masssize)
 	}
 	if (i < 0 && mod > 0)
 		summ->edinica = 1;
+	free(first);
 	return (res);
 }

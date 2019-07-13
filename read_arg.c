@@ -18,8 +18,7 @@ int		ft_concfloat(va_list list, t_fl *fl1)
 	float x;
 
 	x = va_arg(list, double);
-	ft_conclusionfloat(fl1, x);
-	return (0);
+	return (ft_conclusionfloat(fl1, x));
 }
 
 int		ft_conclongdouble(va_list list, t_fl *fl1)
@@ -27,11 +26,11 @@ int		ft_conclongdouble(va_list list, t_fl *fl1)
 	long double x;
 
 	x = va_arg(list, long double);
-	ft_conclusionlongdouble(fl1, x);
-	return (0);
+	return (ft_conclusionlongdouble(fl1, x));
+
 }
 
-int		ft_concdouble(char *s, va_list list)
+int		ft_concdouble(char *s, va_list list, t_pf *pf)
 {
 	double	x;
 	t_fl	*fl1;
@@ -42,21 +41,15 @@ int		ft_concdouble(char *s, va_list list)
 	ft_accuracy(s, fl1);
 	ft_lorllcheck(s, fl1);
 	if (fl1->l == 80)
-	{
-		ft_conclongdouble(list, fl1);
-		ft_free_fl1(fl1);
-	}
+		pf->value = pf->value + ft_conclongdouble(list, fl1);
 	else if (fl1->l == 32)
-	{
-		ft_concfloat(list, fl1);
-		ft_free_fl1(fl1);
-	}
+		pf->value = pf->value + ft_concfloat(list, fl1);
 	else
 	{
 		x = va_arg(list, double);
-		ft_conclusiondouble(fl1, x);
-		ft_free_fl1(fl1);
+		pf->value = pf->value + ft_conclusiondouble(fl1, x);
 	}
+	ft_free_fl1(fl1);
 	return (0);
 }
 
@@ -78,7 +71,7 @@ int		ft_treatment(char *str, va_list list, t_pf *pf)
 	if (str[len - 1] == 'u' || str[len - 1] == 'U')
 		ft_concu(str, list, str[len - 1], pf);
 	if (str[len - 1] == 'f')
-		ft_concdouble(str, list);
+		ft_concdouble(str, list, pf);
 	if (str[len - 1] == 'p')
 		ft_concpointer(str, list, pf);
 	if (str[len - 1] == '%')

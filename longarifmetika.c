@@ -13,40 +13,6 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
-void  ft_zero(int *mass, int masssize)
-{
-	int i;
-	i = 0;
-
-	while (i < masssize)
-	{
-		mass[i] = 0;
-		i++;
-	}
-}
-
-int *ft_reverse(int *mass,int count, int size, int masssize)
-{
-	int *res;
-	int i;
-
-	i = 0;
-	res = (int*)malloc(sizeof(int) * masssize);
-	while (count > 0)
-	{
-		res[i] = 0;
-		i++;
-		count--;
-	}
-	while (size >= 0)
-	{
-		res[i] = mass[size];
-		i++;
-		size--;
-	}
-	return(res);
-}
-
 t_summ		*ft_summastart(int exp, t_summ *summ, int masssize)
 {
 	int i;
@@ -94,6 +60,7 @@ t_summ		*ft_summastart(int exp, t_summ *summ, int masssize)
 					summ->size++;
 				}
 			}
+			free(summ->mass);
 			summ->mass = ft_reverse(new, summ->numbnol, summ->size, masssize);
 			i++;
 		}
@@ -140,6 +107,7 @@ t_summ		*ft_fivemulti(int exp, t_summ *summ, int masssize)
 		}
 		i++;
 	}
+	free(summ->mass);
 	summ->mass = ft_reverse(new, summ->numbnol, summ->size, masssize);
 	return (summ);
 }
@@ -177,6 +145,7 @@ int		*ft_calcsumm(int *first, int *second, int masssize)
 		}
 		i--;
 	}
+	free(first);
 	return (res);
 }
 
