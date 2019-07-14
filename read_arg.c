@@ -27,7 +27,6 @@ int		ft_conclongdouble(va_list list, t_fl *fl1)
 
 	x = va_arg(list, long double);
 	return (ft_conclusionlongdouble(fl1, x));
-
 }
 
 int		ft_concdouble(char *s, va_list list, t_pf *pf)

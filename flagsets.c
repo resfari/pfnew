@@ -30,7 +30,7 @@ int		ft_accuracy(char *str, t_fl *fl)
 	else
 		fl->accuracy = 6;
 	if (fl->accuracy < 50)
-		fl->masssize = 50;
+		fl->masssize = 5000;
 	else
 		fl->masssize = fl->accuracy + 1;
 	fl->lastpos = i;

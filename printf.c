@@ -114,13 +114,9 @@ int main()
 	f = 123.3456;
 	lf = 0.0;
 	Lf = 134342.34546456;
-	ft_printf("\nsymbols float = %d\n", ft_printf("%f", f));
-	printf("\nsymbols float = %d\n", printf("%f", f));
-
-	ft_printf("\nsymbols lfloat = %d\n", ft_printf("%.10lf", lf));
-	printf("\nsymbols lfloat = %d\n", printf("%.10lf", lf));
-	ft_printf("\nsymbols Lfloat = %d\n", ft_printf("%.20Lf", Lf));
-	printf("\nsymbols Lfloat = %d\n", printf("%.20Lf", Lf));
+	ft_printf("\n%d\n", ft_printf("%f", DBL_MAX));
+	printf("\n");
+	printf("\n%d\n", printf("%f", DBL_MAX));
 //	ft_printf("\nsymbols double = %d\n", ft_printf("%lf", lf));
 //	ft_printf("\nsymbols longdouble = %d\n", ft_printf("%Lf", Lf));
 	return (0);

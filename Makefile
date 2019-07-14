@@ -11,8 +11,30 @@
 # **************************************************************************** #
 
 NAME=printf
-SRCS=printf.c c.c d.c o.c s.c x.c u.c p.c newint.c proc.c flagsets.c longarifmetika.c longarifmetikaanother.c floatconc.c read_arg.c
-OBJECTS=printf.o c.o d.o o.o s.o x.o u.o p.o newint.o proc.o flagsets.o longarifmetika.o longarifmetikaanother.o floatconc.o read_arg.o
+SRCS=flagsets.c \
+		  d.c \
+		  o.c \
+		  s.c \
+		  longarifmetika.c \
+		  longarifmetikaanother.c \
+		  floatconc.c \
+		  printf.c \
+		  read_arg.c \
+		  x.c \
+		  proc.c \
+		  c.c \
+		  newint.c \
+		  u.c \
+		  p.c \
+		  d2.c \
+		  flagsetspart2.c \
+		  norm.c \
+		  norm2.c \
+		  check_beats.c \
+		  float_other.c \
+		  mantisa_calc.c \
+		  calc_summ.c \
+		  
 FLAG=-Wall -Wextra -Werror
 all:$(NAME)
 $(NAME):

@@ -39,7 +39,6 @@ void	ft_finish_him(t_final *final, t_fl *fl)
 		write(1, &c, 1);
 		fl->value++;
 	}
-	free(final);
 }
 
 void	ft_accuracy_in_work(t_fl *fl, t_summ *summ)
@@ -48,17 +47,15 @@ void	ft_accuracy_in_work(t_fl *fl, t_summ *summ)
 
 	fin = (t_final*)malloc(sizeof(t_final) * 1);
 	fin->perenos2 = 0;
+	fin->count = 0;
 	if (summ->mass[fl->accuracy] >= 5)
 	{
-		fin->acc = (int*)malloc(sizeof(int) * fl->masssize);
-		ft_zero(fin->acc, fl->masssize);
-		fin->acc[fl->accuracy - 1] = 1;
-		ft_calcsumm_final(fin->acc, summ->mass, fl->masssize, fin);
+		ft_create_massive_for_accuracy(fin, fl, summ);
 		if (fin->perenos == 1)
 		{
 			ft_zero(fin->acc, fl->masssize);
 			fin->acc[fl->finalsize] = 1;
-			ft_calcsumm_final_before(fin->acc, fl->final, fl->masssize, fin);
+			ft_calcsumm_final(fin->acc, fl->final, fl->masssize, fin);
 		}
 		else
 			fin->before = fl->final;
@@ -80,7 +77,7 @@ int		ft_conclusiondouble(t_fl *fl1, double x)
 	fl1->value = 0;
 	fl1->i = 0;
 	str = ft_checkbindouble(fl1, x);
-	sign = ft_check_sign(str[0]);
+	sign = ft_check_sign(str[0], fl1);
 	fl1->exp = ft_check_exp(str, fl1) - fl1->e;
 	mantissa = ft_check_mantissa(str, fl1);
 	ft_calc_mantissa_before(mantissa, fl1);
@@ -96,7 +93,7 @@ int		ft_conclusionfloat(t_fl *fl1, float x)
 	fl1->value = 0;
 	fl1->i = 0;
 	str = ft_checkbinfloat(fl1, x);
-	sign = ft_check_sign(str[0]);
+	sign = ft_check_sign(str[0], fl1);
 	fl1->exp = ft_check_exp(str, fl1) - fl1->e;
 	mantissa = ft_check_mantissa(str, fl1);
 	ft_calc_mantissa_before(mantissa, fl1);
@@ -112,7 +109,7 @@ int		ft_conclusionlongdouble(t_fl *fl1, long double x)
 	fl1->value = 0;
 	fl1->i = 0;
 	str = ft_checkbinlongdouble(fl1, x);
-	sign = ft_check_sign(str[0]);
+	sign = ft_check_sign(str[0], fl1);
 	fl1->exp = ft_check_exp(str, fl1) - fl1->e;
 	mantissa = ft_check_mantissa(str, fl1);
 	ft_calc_mantissa_before(mantissa, fl1);
