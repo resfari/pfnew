@@ -17,21 +17,18 @@ int		ft_check_sign(char c, t_fl *fl)
 {
 	if (c == '1')
 	{
-		fl->value++;
-		write(1, "-", 1);
+		fl->width--;
 		return (1);
 	}
 	else if (fl->flagplus == 1 && c == '0')
 	{
-		fl->value++;
-		write(1, "+", 1);
-		return (1);
+		fl->width--;
+		return (0);
 	}
 	else if (fl->flagspace == 1 && c == '0')
 	{
-		fl->value++;
-		write(1, " ", 1);
-		return (1);
+		fl->width--;
+		return (0);
 	}
 	else
 		return (0);

@@ -18,15 +18,15 @@ void			ft_hex_display_minus_p2(char *str, t_fl *fl, t_pf *pf, char c)
 	int i;
 
 	i = 0;
-	while (fl->acc_x-- > 0)
-	{
-		pf->value++;
-		write(1, "0", 1);
-	}
 	if ((fl->len != 1 && str[0] != '0') && fl->flaglattice == 1 && fl->nol == 0)
 	{
 		c == 'x' ? write(1, "0x", 2) : write(1, "0X", 2);
 		pf->value = pf->value + 2;
+	}
+	while (fl->acc_x-- > 0)
+	{
+		pf->value++;
+		write(1, "0", 1);
 	}
 	while (fl->len != 0 && str[i] != '\0')
 	{

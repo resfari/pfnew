@@ -16,8 +16,11 @@
 int			ft_int_width_display_offminus(int acc, t_fl *fl,
 		t_pf *pf, char *str)
 {
-	if (fl->nol == 1)
+	if (fl->nol == 1 && fl->accuracy == -1)
+	{
+		fl->puted++;
 		ft_int_sign_display(fl, pf);
+	}
 	if (fl->len == 1 && str[0] == '0' && fl->accuracy == 0)
 		fl->width++;
 	while (fl->width > acc + fl->len)
@@ -27,7 +30,7 @@ int			ft_int_width_display_offminus(int acc, t_fl *fl,
 		pf->value++;
 		fl->width--;
 	}
-	if (fl->nol != 1)
+	if (fl->puted == 0)
 		ft_int_sign_display(fl, pf);
 	return (0);
 }

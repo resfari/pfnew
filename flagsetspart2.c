@@ -42,15 +42,7 @@ int		ft_lllhhh(char *str, t_fl *fl)
 
 int		ft_lorllcheck(char *str, t_fl *fl)
 {
-	if (str[fl->lastpos] == 'l')
-	{
-		fl->l = 64;
-		fl->e = 1023;
-		fl->m = 52;
-		fl->start = 12;
-		return (1);
-	}
-	else if (str[fl->lastpos] == 'L')
+	if (str[fl->lastpos] == 'L')
 	{
 		fl->l = 80;
 		fl->e = 16383;
@@ -60,11 +52,13 @@ int		ft_lorllcheck(char *str, t_fl *fl)
 	}
 	else
 	{
-		fl->e = 127;
-		fl->l = 32;
-		fl->m = 23;
-		fl->start = 9;
-		return (0);
+		if (str[fl->lastpos] != 'l')
+			fl->itsf = 1;
+		fl->l = 64;
+		fl->e = 1023;
+		fl->m = 52;
+		fl->start = 12;
+		return (1);
 	}
 }
 

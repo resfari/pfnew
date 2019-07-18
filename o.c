@@ -75,6 +75,8 @@ void			ft_octo_display(char *str, t_fl *fl, t_pf *pf)
 
 	i = 0;
 	len = ft_strlen(str);
+	if ((len == 1 && str[i] == '0') && fl->accuracy == 0)
+		len = 0;
 	if (fl->flagminus == 1)
 	{
 		if (fl->flaglattice == 1)
@@ -84,7 +86,7 @@ void			ft_octo_display(char *str, t_fl *fl, t_pf *pf)
 			fl->accuracy--;
 			ft_pf_write_norm(pf, fl, 1);
 		}
-		while (str[i] != '\0')
+		while (str[i] != '\0' && i < len)
 		{
 			write(1, &str[i], 1);
 			pf->value++;
@@ -115,7 +117,7 @@ uintmax_t		ft_octo_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	else if (fl->sl == 1)
 		num = (unsigned long)(va_arg(list, unsigned long int));
 	else
-		num = (unsigned int)(va_arg(list, unsigned int));
+	num = (unsigned int)(va_arg(list, unsigned int));
 	num = (uintmax_t)num;
 	str = ft_itoa_base(num, 8);
 	ft_octo_display(str, fl, pf);

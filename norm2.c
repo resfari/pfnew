@@ -30,6 +30,11 @@ void	ft_float_write(t_fl *fl, int norm)
 		write(1, "0", 1);
 		fl->value++;
 	}
+	if (norm == 4)
+	{
+		write(1, " ", 1);
+		fl->value++;
+	}
 }
 
 int		ft_check_str(char *str)
@@ -84,8 +89,13 @@ int		*ft_reverse(int *mass, int count, int size, int masssize)
 
 void	ft_create_massive_for_accuracy(t_final *fin, t_fl *fl, t_summ *summ)
 {
+	int accuracy;
+
+	accuracy = fl->accuracy;
+	if (accuracy < 1)
+		accuracy = 1;
 	fin->acc = (int*)malloc(sizeof(int) * fl->masssize);
 	ft_zero(fin->acc, fl->masssize);
-	fin->acc[fl->accuracy - 1] = 1;
+	fin->acc[accuracy - 1] = 1;
 	ft_calcsumm_final(fin->acc, summ->mass, fl->masssize, fin);
 }

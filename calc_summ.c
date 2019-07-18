@@ -30,7 +30,10 @@ void	ft_calcsumm_fin3(t_mean *mean, t_final *final)
 			final->perenos2 = 0;
 	}
 	if (final->count == 0)
+	{
 		final->after = mean->new;
+		final->count++;
+	}
 	else
 		final->before = mean->new;
 }
@@ -70,7 +73,6 @@ void	ft_calcsumm_final(int *first, int *second, int masssize, t_final *final)
 		mean->i--;
 	}
 	ft_calcsumm_fin3(mean, final);
-	free(first);
 	free(mean);
 }
 

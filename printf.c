@@ -104,20 +104,3 @@ int		ft_printf(const char *restrict format, ...)
 	ft_free_pf(pf);
 	return (pf->value);
 }
-
-int main()
-{
-	long double Lf;
-	double lf;
-	float f;
-
-	f = 123.3456;
-	lf = 0.0;
-	Lf = 134342.34546456;
-	ft_printf("\n%d\n", ft_printf("%f", DBL_MAX));
-	printf("\n");
-	printf("\n%d\n", printf("%f", DBL_MAX));
-//	ft_printf("\nsymbols double = %d\n", ft_printf("%lf", lf));
-//	ft_printf("\nsymbols longdouble = %d\n", ft_printf("%Lf", Lf));
-	return (0);
-}

@@ -101,27 +101,6 @@ void	ft_calc_man_over_p2(int *man, t_fl *fl)
 	ft_accuracy_in_work(fl, summ);
 }
 
-int		ft_check_infinity(t_fl *fl)
-{
-	int i;
-	char c;
-	const char *inf;
-
-	i = 0;
-	inf = "340282366920938463463374607431768211456";
-	while (i < 39)
-	{
-		c = fl->final[i] + 48;
-		if (inf[i] == c)
-			i++;
-		else
-			return (0);
-	}
-	if (i == 39)
-		return (1);
-	return (0);
-}
-
 void	ft_calc_mantissa_over(int *man, t_fl *fl)
 {
 	char	c;
@@ -130,12 +109,9 @@ void	ft_calc_mantissa_over(int *man, t_fl *fl)
 	if (fl->i > fl->m)
 	{
 		fl->i = 0;
-		if (fl->l == 32 && ft_check_infinity(fl) == 1)
-		{
-			write(1, "inf", 3);
-			fl->value = fl->value + 3;
+		if (fl->itsf == 1 && (ft_check_infinity(fl) == 1 || ft_check_nan(fl) == 1))
 			return ;
-		}
+		ft_sign_put(fl);
 		if (fl->edinica == 1)
 		{
 			ft_float_write(fl, 1);
@@ -148,6 +124,10 @@ void	ft_calc_mantissa_over(int *man, t_fl *fl)
 			fl->value++;
 			fl->finalsize--;
 		}
+		if (fl->accuracy == -1 && fl->flaglattice == 1)
+			ft_float_write(fl, 2);
+		if (fl->accuracy == -1)
+			return ;
 		ft_float_write(fl, 2);
 		if (fl->accuracy == 0)
 			ft_float_write(fl, 3);
