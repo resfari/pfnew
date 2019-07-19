@@ -10,8 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   octoconc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgeorgia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/05 19:06:26 by lgeorgia          #+#    #+#             */
+/*   Updated: 2019/07/05 19:06:26 by lgeorgia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "printf.h"
+#include "./libft/libft.h"
 
 void			ft_pf_write_norm(t_pf *pf, t_fl *fl, int norm)
 {
@@ -33,70 +45,115 @@ void			ft_pf_write_norm(t_pf *pf, t_fl *fl, int norm)
 	}
 	if (norm == 4)
 	{
-		fl->nol == 1 && fl->accuracy == -1 ?
+		fl->nol == 1 && (fl->accuracy == -1 || fl->accuracy == 0) ?
 		write(1, "0", 1) : write(1, " ", 1);
 		pf->value++;
 	}
 }
 
-void			ft_octo_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
-{
-	int i;
-	int acc;
-
-	i = 0;
-	acc = 0;
-	if ((len == 1 && str[i] == '0') && fl->accuracy == 0)
-		len = 0;
-	if (fl->accuracy > len)
-		acc = fl->accuracy - len;
-	if (fl->flaglattice == 1)
-	{
-		if (len == 1 && str[i] == '0')
-			len = 0;
-		fl->width--;
-	}
-	if (fl->flaglattice == 1 && fl->nol == 1)
-		ft_pf_write_norm(pf, fl, 3);
-	while (i++ + len + acc < fl->width)
-		ft_pf_write_norm(pf, fl, 4);
-	i = 0;
-	while (acc-- > 0)
-		ft_pf_write_norm(pf, fl, 3);
-	if (fl->flaglattice == 1 && fl->nol == 0)
-		ft_pf_write_norm(pf, fl, 3);
-	ft_octo_norm(str, pf, len);
-}
-
-void			ft_octo_display(char *str, t_fl *fl, t_pf *pf)
+void	ft_octo_display_left(char *str, t_fl *fl, t_pf *pf)
 {
 	int len;
-	int i;
+	int num;
 
-	i = 0;
 	len = ft_strlen(str);
-	if ((len == 1 && str[i] == '0') && fl->accuracy == 0)
-		len = 0;
-	if (fl->flagminus == 1)
+	num = len;
+	if (len == 1 && str[0] == '0' && fl->accuracy > 0)
 	{
-		if (fl->flaglattice == 1)
-			ft_pf_write_norm(pf, fl, 1);
-		while (fl->accuracy > len)
+		if (fl->width == 0)
 		{
-			fl->accuracy--;
-			ft_pf_write_norm(pf, fl, 1);
+			while (fl->accuracy > 0)
+			{
+				write(1, "0", 1);
+				fl->accuracy--;
+				pf->value++;
+			}
 		}
-		while (str[i] != '\0' && i < len)
+		while (fl->width)
 		{
-			write(1, &str[i], 1);
-			pf->value++;
-			i++;
+			pf->value += write(1, " ", 1);
+			fl->width--;
 		}
-		while (i++ < fl->width)
-			ft_pf_write_norm(pf, fl, 2);
+		return ;
+	}
+	if (fl->flaglattice == 1 && (str[0] != '0' && len != 1))
+	{
+		pf->value += write(1, "0", 1);
+		len++;
+	}
+	while (len++ < fl->accuracy)
+		pf->value += write(1, "0", 1);
+	pf->value += num;
+	write(1, str, num);
+	while (fl->width-- >= len)
+		pf->value += write(1, " ", 1);
+}
+
+void	ft_octonol(t_fl *fl, int len, t_pf *pf)
+{
+	if (fl->accuracy != -1)
+	{
+		while (fl->width-- > len)
+		{
+			if (fl->nol == 1 && fl->accuracy < 1)
+				pf->value += write(1, "0", 1);
+			else
+				pf->value += write(1, " ", 1);
+		}
 	}
 	else
-		ft_octo_display_minus(str, fl, pf, len);
+	{
+		if (fl->flagplus == 1)
+			fl->width--;
+		while (fl->width-- > len)
+		{
+			if (fl->nol == 1 && fl->accuracy < 1)
+				pf->value += write(1, "0", 1);
+			else
+				pf->value += write(1, " ", 1);
+		}
+	}
+}
+
+void	ft_octo_display_right(char *str, t_fl *fl, t_pf *pf)
+{
+	int len;
+	int num;
+
+	len = ft_strlen(str);
+	num = len;
+	if ((len == 1 && str[0] == '0') && fl->accuracy >= 0)
+	{
+		if (fl->flaglattice == 1)
+		{
+			pf->value += write(1, "0", 1);
+			fl->accuracy--;
+		}
+		if (fl->width == 0)
+		{
+			while (fl->accuracy > 0)
+			{
+				write(1, "0", 1);
+				fl->accuracy--;
+				pf->value++;
+			}
+		}
+		while (fl->width)
+		{
+			pf->value += write(1, " ", 1);
+			fl->width--;
+		}
+		return ;
+	}
+	if (fl->flaglattice == 1 && (len != 1 && str[0] != '0'))
+		len++;
+	ft_octonol(fl, len, pf);
+	while (len++ < fl->accuracy)
+		pf->value += write(1, "0", 1);
+	if (fl->flaglattice == 1 && (len != 1 && str[0] != '0'))
+		pf->value += write(1, "0", 1);
+	pf->value += num;
+	write(1, str, num);
 }
 
 uintmax_t		ft_octo_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
@@ -120,7 +177,10 @@ uintmax_t		ft_octo_ditsribution(va_list list, char c, t_fl *fl, t_pf *pf)
 	num = (unsigned int)(va_arg(list, unsigned int));
 	num = (uintmax_t)num;
 	str = ft_itoa_base(num, 8);
-	ft_octo_display(str, fl, pf);
+	if (fl->flagminus == 1)
+		ft_octo_display_left(str, fl, pf);
+	else
+		ft_octo_display_right(str, fl, pf);
 	if (num != 0)
 		free(str);
 	return (0);

@@ -118,12 +118,7 @@ int		ft_concstr(char *s, va_list list, t_pf *pf)
 	fl = (t_fl*)malloc(sizeof(t_fl) * 1);
 	str = va_arg(list, char *);
 	if (str == NULL)
-	{
-		write(1, "(null)", 6);
-		pf->value = pf->value + 6;
-		free(fl);
-		return (0);
-	}
+		str = "(null)";
 	ft_flags(s, fl);
 	ft_width(s, fl);
 	ft_accuracy_str(s, fl);

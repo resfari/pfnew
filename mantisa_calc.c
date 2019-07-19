@@ -109,7 +109,8 @@ void	ft_calc_mantissa_over(int *man, t_fl *fl)
 	if (fl->i > fl->m)
 	{
 		fl->i = 0;
-		if (fl->itsf == 1 && (ft_check_infinity(fl) == 1 || ft_check_nan(fl) == 1))
+		if (fl->itsf == 1 && (ft_check_infinity(fl) == 1 ||
+		ft_check_nan(fl) == 1))
 			return ;
 		ft_sign_put(fl);
 		if (fl->edinica == 1)
@@ -117,22 +118,13 @@ void	ft_calc_mantissa_over(int *man, t_fl *fl)
 			ft_float_write(fl, 1);
 			fl->edinica = 0;
 		}
-		while (fl->i < fl->masssize && fl->finalsize >= 0)
+		while (fl->i < fl->masssize && fl->finalsize-- >= 0)
 		{
 			c = fl->final[fl->i++] + 48;
 			write(1, &c, 1);
 			fl->value++;
-			fl->finalsize--;
 		}
-		if (fl->accuracy == -1 && fl->flaglattice == 1)
-			ft_float_write(fl, 2);
-		if (fl->accuracy == -1)
-			return ;
-		ft_float_write(fl, 2);
-		if (fl->accuracy == 0)
-			ft_float_write(fl, 3);
-		while (fl->accuracy-- > 0)
-			ft_float_write(fl, 3);
+		ft_mantissa_p4(fl);
 		return ;
 	}
 	ft_calc_man_over_p2(man, fl);

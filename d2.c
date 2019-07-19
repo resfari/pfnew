@@ -13,6 +13,35 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
+int		ft_check_max(char *str, int count, t_fl *fl)
+{
+	int			i;
+	const char	*mlg;
+	int			num;
+	int			j;
+
+	j = 0;
+	num = 0;
+	mlg = "2147483649";
+	i = count;
+	if (str[i] == '.')
+		i++;
+	while (mlg[j] != '\0' && str[i] != '\0')
+	{
+		if (str[i] == mlg[j])
+			num++;
+		i++;
+		j++;
+	}
+	if (num == 10)
+	{
+		fl->lastpos = i;
+		fl->accuracy = 6;
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_size_width_check_flags(t_fl *fl)
 {
 	if (fl->flagplus == 1 || fl->flagspace == 1)

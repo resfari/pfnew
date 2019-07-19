@@ -45,11 +45,6 @@ void			ft_hex_display_minus(char *str, t_fl *fl, t_pf *pf, char c)
 
 	i = 0;
 	fl->acc_x = 0;
-	if ((fl->len == 1 && str[i] == '0') && fl->accuracy == 0)
-	{
-		fl->flaglattice = 0;
-		fl->len = 0;
-	}
 	if (fl->accuracy > fl->len)
 		fl->acc_x = fl->accuracy - fl->len;
 	if (fl->flaglattice == 1)
@@ -73,14 +68,14 @@ void			ft_hex_display(char *str, t_fl *fl, t_pf *pf, char c)
 	int i;
 
 	i = 0;
-	fl->len = ft_strlen(str);
+	ft_hex_display_norm(fl, str, i);
 	if (fl->flagminus == 1)
 	{
-		if (fl->flaglattice == 1)
+		if (fl->len != 1 && str[i] != '0' && fl->flaglattice == 1)
 			c == 'x' ? ft_hex_norm(fl, pf, 3) : ft_hex_norm(fl, pf, 4);
 		while (fl->accuracy-- > fl->len)
 			ft_hex_norm(fl, pf, 2);
-		while (str[i] != '\0')
+		while (str[i] != '\0' && i < fl->len)
 		{
 			if (ft_isalpha((int)(str[i])))
 				c == 'X' ? ft_putchar(str[i]) : ft_putchar(str[i] + 32);

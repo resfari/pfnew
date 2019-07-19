@@ -36,6 +36,7 @@ SRCS=flagsets.c \
 		  calc_summ.c \
 		  infinity.c \
 		  nan.c \
+		  f.c \
 		  
 FLAG=-Wall -Wextra -Werror
 all:$(NAME)

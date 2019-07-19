@@ -13,6 +13,27 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
+void			ft_hex_display_norm(t_fl *fl, char *str, int i)
+{
+	int nol;
+
+	nol = fl->nol;
+	fl->len = ft_strlen(str);
+	if (fl->len == 1 && str[i] == '0')
+	{
+		fl->flaglattice = 0;
+		fl->len = 0;
+		fl->nol = 0;
+		if (fl->accuracy == -1)
+		{
+			fl->len = 1;
+			fl->nol = nol;
+		}
+	}
+	if (fl->accuracy != -1)
+		fl->nol = 0;
+}
+
 void			ft_ptr_display_minus(char *str, t_fl *fl, t_pf *pf, int len)
 {
 	int i;

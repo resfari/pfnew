@@ -63,8 +63,10 @@ typedef	struct			s_flags
 	int					i;
 	int					exp;
 	int					itsf;
-	int 				puted;
+	int					puted;
 	int					perehod_in_acc;
+	int					f;
+	int					accspec;
 }						t_fl;
 
 typedef	struct			s_ar
@@ -192,7 +194,12 @@ void					ft_calc_mantissa_before(int *man, t_fl *fl);
 void					ft_create_massive_for_accuracy(t_final *fin,
 		t_fl *fl, t_summ *summ);
 int						ft_check_infinity(t_fl *fl);
-int		ft_check_nan(t_fl *fl);
-void	ft_sign_put(t_fl *fl);
+int						ft_check_nan(t_fl *fl);
+void					ft_sign_put(t_fl *fl);
+int						ft_check_max(char *str, int count, t_fl *fl);
+int						ft_check_elements(int *mass, t_fl *fl);
+int						ft_concdouble(char *s, va_list list, t_pf *pf);
+void					ft_mantissa_p4(t_fl *fl);
+void					ft_hex_display_norm(t_fl *fl, char *str, int i);
 
 #endif

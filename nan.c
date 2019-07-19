@@ -6,12 +6,50 @@
 /*   By: lgeorgia <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 17:01:27 by lgeorgia          #+#    #+#             */
-/*   Updated: 2019/07/18 17:01:27 by lgeorgia         ###   ########.fr       */
+/*   Updated: 2019/07/19 18:08:54 by lgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft/libft.h"
 #include "printf.h"
+
+void	ft_sign_put(t_fl *fl)
+{
+	fl->puted = 1;
+	if (fl->sign == 1)
+	{
+		fl->value++;
+		write(1, "-", 1);
+	}
+	else if (fl->flagplus == 1 && fl->sign == 0)
+	{
+		fl->value++;
+		write(1, "+", 1);
+	}
+	else if (fl->flagspace == 1 && fl->sign == 0)
+	{
+		fl->value++;
+		write(1, " ", 1);
+	}
+	else
+		return ;
+}
+
+int		ft_check_elements(int *mass, t_fl *fl)
+{
+	int i;
+
+	i = 1;
+	while (i < 6)
+	{
+		if (mass[i] > 0)
+			return (1);
+		i++;
+	}
+	if (fl->final[fl->finalsize] % 2 != 0)
+		return (1);
+	return (0);
+}
 
 void	ft_display_nan_no_minus(t_fl *fl)
 {
@@ -46,16 +84,16 @@ void	ft_display_nan(t_fl *fl)
 
 int		ft_check_nan(t_fl *fl)
 {
-	int i;
-	char c;
-	const char *nan;
+	int			i;
+	char		c;
+	const char	*nan;
 
 	i = 0;
 	nan = "26965397022934738615939577861835371004269654684134598591014512173659"
-	   "90137082514446990627159836113040316801708198070900364881846532216249"
+	"90137082514446990627159836113040316801708198070900364881846532216249"
 	"33739271145959211186566651840137298227914453329401869141179179624428127"
- "508653257226023513694322210869665811240855745025766026879447359920868907"
- "719574457253034494436336205824";
+	"508653257226023513694322210869665811240855745025766026879447359920868907"
+	"719574457253034494436336205824";
 	while (i < 309)
 	{
 		c = fl->final[i] + 48;

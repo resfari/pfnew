@@ -13,35 +13,6 @@
 #include "./libft/libft.h"
 #include "printf.h"
 
-int		ft_check_max(char *str, int count, t_fl *fl)
-{
-	int i;
-	const char *MAX_I;
-	int num;
-	int j;
-
-	j = 0;
-	num = 0;
-	MAX_I = "2147483649";
-	i = count;
-	if (str[i]== '.')
-		i++;
-	while (MAX_I[j] != '\0' && str[i] != '\0')
-	{
-		if (str[i] == MAX_I[j])
-			num++;
-		i++;
-		j++;
-	}
-	if (num == 10)
-	{
-		fl->lastpos = i;
-		fl->accuracy = 6;
-		return (1);
-	}
-	return (0);
-}
-
 int		ft_accuracy(char *str, t_fl *fl)
 {
 	int i;
@@ -50,10 +21,7 @@ int		ft_accuracy(char *str, t_fl *fl)
 	i = fl->lastpos;
 	count = 0;
 	if (ft_check_max(str, fl->lastpos, fl) == 1)
-	{
-		fl->masssize = 5000;
 		return (1);
-	}
 	if (str[i] == '.')
 	{
 		i++;
@@ -68,7 +36,6 @@ int		ft_accuracy(char *str, t_fl *fl)
 		fl->accuracy = 6;
 	if (i > fl->lastpos && count == 0)
 		fl->accuracy = -1;
-	fl->masssize = 5000;
 	fl->lastpos = i;
 	return (1);
 }
@@ -148,5 +115,5 @@ void	ft_flagsinit(t_fl *fl)
 	fl->puted = 0;
 	fl->perehod_in_acc = 0;
 	fl->edinica = 0;
-	fl->masssize = 0;
+	fl->masssize = 5000;
 }
